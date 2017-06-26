@@ -48,6 +48,8 @@ read -rsp "$CONT" -n1
 
 
 # make firewall exceptions
+lokkit -p 6556:tcp
+read -rsp "$CONT" -n1
 
 
 # mkdir Backup mount
@@ -59,5 +61,7 @@ echo "UUID=9750ef5c-807d-406c-bc20-9f7012b24ea1 /snapshots ext4 defaults,noauto 
 mount /snapshots
 
 read -rsp "$CONT" -n1
+
+
 
 
