@@ -48,7 +48,8 @@ read -rsp "$CONT" -n1
 
 
 # make firewall exceptions
-lokkit -p 6556:tcp  --update
+#lokkit -p 6556:tcp  --update
+EDIT /etc/sysconfig/iptables
 
 service iptables restart
 read -rsp "$CONT" -n1
