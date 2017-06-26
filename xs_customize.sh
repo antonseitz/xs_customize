@@ -41,14 +41,14 @@ read -rsp "$CONT" -n1
 
 # start xinetd 
 
-systemctl enable xinetd.service
+ls
 systemctl start xinetd.service
 
 read -rsp "$CONT" -n1
 
 
 # make firewall exceptions
-lokkit -p 6556:tcp
+lokkit -p 6556:tcp  --update
 read -rsp "$CONT" -n1
 
 
