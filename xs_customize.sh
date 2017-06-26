@@ -3,7 +3,7 @@
 
 # isntall mc and xinted 
 
-yum --enablerepo=base -y install mc xinetd
+yum --enablerepo=base -y install mc xinetd lokkit
 
 
 CONT="Press any key to continue OR CTRL-C to cancel..."
