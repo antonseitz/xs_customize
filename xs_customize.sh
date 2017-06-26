@@ -49,6 +49,8 @@ read -rsp "$CONT" -n1
 
 # make firewall exceptions
 lokkit -p 6556:tcp  --update
+
+service iptables restart
 read -rsp "$CONT" -n1
 
 
