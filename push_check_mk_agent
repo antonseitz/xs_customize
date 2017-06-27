@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Pushes check_mk_linux from OMD host to remote machine
+echo "Pushes check_mk_linux from OMD host to remote machine"
 
 read IP
 
