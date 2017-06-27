@@ -6,11 +6,8 @@
 yum --enablerepo=base -y install mc xinetd lokkit
 
 
-CONT="Press any key to continue OR CTRL-C to cancel..."
+read -rsp $'Press key to continue OR CTRL-C to cancel...\n' -n1
 
-read -rsp "$CONT" -n1
-
-read -rp $'Are you sure (Y/n) : ' -ei $'Y' key;
 
 # load modules for ipmi
 
@@ -25,28 +22,31 @@ chmod +x /etc/sysconfig/modules/ipmi_devintf.modules
 echo "modprobe ipmi_si" > /etc/sysconfig/modules/ipmi_si.modules
 echo "modprobe ipmi_devintf" > /etc/sysconfig/modules/ipmi_devintf.modules
 
-read -rsp "$CONT" -n1
+read -rsp $'Press key to continue OR CTRL-C to cancel...\n' -n1
+
 
 # test ipmi sensors
 
 ipmitool sensor
 
 
-read -rsp "$CONT" -n1
+read -rsp $'Press key to continue OR CTRL-C to cancel...\n' -n1
+
 # install check_mk
 
 
 scp root@192.168.1.207:/omd/versions/default/share/check_mk/agents/check_mk_agent.linux /usr/bin/check_mk_agent
 scp root@192.168.1.207:/omd/versions/default/share/check_mk/agents/xinetd.conf /etc/xinetd.d/check_mk
 
-read -rsp "$CONT" -n1
+read -rsp $'Press key to continue OR CTRL-C to cancel...\n' -n1
+
 
 # start xinetd 
 
 ls
 systemctl start xinetd.service
+read -rsp $'Press key to continue OR CTRL-C to cancel...\n' -n1
 
-read -rsp "$CONT" -n1
 
 
 # make firewall exceptions
@@ -54,7 +54,8 @@ read -rsp "$CONT" -n1
 EDIT /etc/sysconfig/iptables
 
 service iptables restart
-read -rsp "$CONT" -n1
+read -rsp $'Press key to continue OR CTRL-C to cancel...\n' -n1
+
 
 
 # mkdir Backup mount
@@ -65,7 +66,8 @@ echo "UUID=9750ef5c-807d-406c-bc20-9f7012b24ea1 /snapshots ext4 defaults,noauto 
 
 mount /snapshots
 
-read -rsp "$CONT" -n1
+read -rsp $'Press key to continue OR CTRL-C to cancel...\n' -n1
+
 
 
 
