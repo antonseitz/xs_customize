@@ -9,7 +9,7 @@ yum --enablerepo=base -y install mc xinetd
 read -rsp $'Has this Host IPMI [y/n] ?\n' -n1 IPMI
 
 
-if [ "$IPMI"=="y" ]; then 
+if [ "$IPMI"=="y" ]; then
 
 
 # load modules for ipmi
