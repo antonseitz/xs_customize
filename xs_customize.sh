@@ -83,19 +83,20 @@ read -rsp $'Enter IP of this host : ' IP
 
 telnet $IP 6556
 
-echo "\n\n"
+echo 
+echo
 
 read -rsp $'Should we make mount point for /snapshots or   to cancel ? (CTRL-C)...\n' -n1
 
 ls -la /dev/disk/by-uuid
-
+echo
 
 read -rsp $'Copy UUID from above for Pasting in /etc/fstab ...\n' -n1
 # mkdir Backup mount
 mkdir /snapshots
 
 #UUID findet man unter /dev/disk/by-uuid 
-echo "## ENTRY for /snapshots -Partition
+echo "## ENTRY for /snapshots -Partition"  >> /etc/fstab
 echo "UUID=COPY-HERE_UUID /snapshots ext4 defaults,noauto 0 2" >> /etc/fstab
 
 nano /etc/fstab
