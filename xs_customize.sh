@@ -83,7 +83,8 @@ read -rsp $'Enter IP of this host : ' IP
 
 telnet $IP 6556
 
-echo
+echo "\n\n"
+
 read -rsp $'Should we make mount point for /snapshots or   to cancel ? (CTRL-C)...\n' -n1
 
 
