@@ -10,6 +10,8 @@ CONT="Press any key to continue OR CTRL-C to cancel..."
 
 read -rsp "$CONT" -n1
 
+read -rp $'Are you sure (Y/n) : ' -ei $'Y' key;
+
 # load modules for ipmi
 
 modprobe ipmi_si
