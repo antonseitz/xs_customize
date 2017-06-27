@@ -37,6 +37,13 @@ read -rsp $'Press key to continue OR CTRL-C to cancel...\n' -n1
 fi
 
 
+
+
+read -rsp $'Is OMD Host reachable per ssh ? [y/n] ?\n' -n1 IPMI
+
+
+if [ $IPMI == "y" ]; then
+
 # install check_mk
 
 read -rsp $'Enter IP of Check_mk host : ' IP
@@ -45,6 +52,10 @@ scp root@$IP:/omd/versions/default/share/check_mk/agents/xinetd.conf /etc/xinetd
 
 read -rsp $'Press key to continue OR CTRL-C to cancel...\n' -n1
 
+else
+echo "So, you can use script push_check_mk_agent on OMD HOst to push on this machine!"
+
+fi
 
 # start xinetd 
 
