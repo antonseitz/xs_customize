@@ -85,6 +85,13 @@ echo
 
 read -rsp $'Should we make mount point for /snapshots or   to cancel ? (CTRL-C)...\n' -n1
 
+echo " /dev/disk/by-path/ : "
+echo
+ ls -la /dev/disk/by-path/
+
+echo " /dev/disk/by-uuid :"
+echo
+
 ls -la /dev/disk/by-uuid
 echo
 echo
