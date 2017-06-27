@@ -10,13 +10,13 @@
 rm -f xs_customize.sh && wget --no-cache https://raw.githubusercontent.com/antonseitz/xs_customize/master/xs_customize.sh && chmod u+x xs_customize.sh
  
 
-#xs_customize.sh
+# xs_customize.sh
 This script 
 - installs mc (Midnight COmmandar) on a XenServer Installation > 7.0
 - installs check_mk agent and 
 - ipmi -modules for monitoring the server hardware 
 
 
-#push_check_mk_agent 
+# push_check_mk_agent 
 
 Pushes check_mk agent from OMD host zu client
