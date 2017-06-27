@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# isntall mc and xinted 
+# install mc and xinted 
 
 yum --enablerepo=base -y install mc xinetd 
 
@@ -8,12 +8,12 @@ yum --enablerepo=base -y install mc xinetd
 read -rsp $'Has this Host IPMI [y/n] ?\n' -n1 IPMI
 
 
-if [ "$IPMI"=="y" ]; then
+if [ $IPMI == "y" ]; then
 
 
 # load modules for ipmi
 
-modprobe  ipmi_si
+modprobe ipmi_si
 modprobe ipmi_devintf
 
 # activate ipmi-modules permanently on host boot
