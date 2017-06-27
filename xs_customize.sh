@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 # isntall mc and xinted 
 
 yum --enablerepo=base -y install mc xinetd 
