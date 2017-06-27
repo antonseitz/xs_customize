@@ -5,7 +5,7 @@
 
  # rm -f xs_customize.sh && wget https://raw.githubusercontent.com/antonseitz/xs_customize/master/xs_customize.sh && chmod u+x xs_customize.sh
 
-# install mc and xinted 
+# install mc and xinted per yum
 
 yum --enablerepo=base -y install mc xinetd 
 echo
