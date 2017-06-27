@@ -87,12 +87,18 @@ echo "\n\n"
 
 read -rsp $'Should we make mount point for /snapshots or   to cancel ? (CTRL-C)...\n' -n1
 
+ls -la /dev/disk/by-uuid
 
+
+read -rsp $'Copy UUID from above for Pasting in /etc/fstab ...\n' -n1
 # mkdir Backup mount
 mkdir /snapshots
 
 #UUID findet man unter /dev/disk/by-uuid 
-echo "UUID=9750ef5c-807d-406c-bc20-9f7012b24ea1 /snapshots ext4 defaults,noauto 0 2" >> /etc/fstab
+echo "## ENTRY for /snapshots -Partition
+echo "UUID=COPY-HERE_UUID /snapshots ext4 defaults,noauto 0 2" >> /etc/fstab
+
+nano /etc/fstab
 
 mount /snapshots
 
