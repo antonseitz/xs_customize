@@ -2,9 +2,12 @@
 
  You can download and install this scripts per git fetch.
 
- yum --enablerepo=base -y install git
- git clone https://github.com/antonseitz/xs_customize.git
+yum --enablerepo=base -y install git
+
+git clone https://github.com/antonseitz/xs_customize.git
+ 
 cd xs_customize
+
 chmod u+x *
 
  oder wget:  (Raw needs sometimes some minutes to offer the newest commit..=)
