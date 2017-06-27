@@ -3,10 +3,13 @@
 
 # isntall mc and xinted 
 
-yum --enablerepo=base -y install mc xinetd lokkit
+yum --enablerepo=base -y install mc xinetd 
 
 
-read -rsp $'Press key to continue OR CTRL-C to cancel...\n' -n1
+read -rsp $'Has this Host IPMI ?\n' -n1 IPMI
+
+
+if["$IPMI"=="y"];then 
 
 
 # load modules for ipmi
@@ -31,6 +34,9 @@ ipmitool sensor
 
 
 read -rsp $'Press key to continue OR CTRL-C to cancel...\n' -n1
+
+fi
+
 
 # install check_mk
 
