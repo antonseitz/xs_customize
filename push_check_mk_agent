@@ -2,7 +2,7 @@
 
 echo "Pushes check_mk_linux from OMD host to remote machine"
 
-read IP
+read -rsp "Enter IP of remote machine : " IP
 
 scp /omd/versions/default/share/check_mk/agents/check_mk_agent.linux root@$IP:/usr/bin/check_mk_agent
-scp root/omd/versions/default/share/check_mk/agents/xinetd.conf root@$IP:/etc/xinetd.d/check_mk
+scp /omd/versions/default/share/check_mk/agents/xinetd.conf root@$IP:/etc/xinetd.d/check_mk
