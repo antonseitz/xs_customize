@@ -15,11 +15,12 @@ modprobe ipmi_si
 modprobe ipmi_devintf
 
 # activate ipmi-modules permanently on host boot
-chmod +x /etc/sysconfig/modules/ipmi_si.modules
-chmod +x /etc/sysconfig/modules/ipmi_devintf.modules
 
 echo "modprobe ipmi_si" > /etc/sysconfig/modules/ipmi_si.modules
 echo "modprobe ipmi_devintf" > /etc/sysconfig/modules/ipmi_devintf.modules
+chmod +x /etc/sysconfig/modules/ipmi_si.modules
+chmod +x /etc/sysconfig/modules/ipmi_devintf.modules
+
 echo
 read -rsp $'Press key to continue OR CTRL-C to cancel...\n' -n1
 
