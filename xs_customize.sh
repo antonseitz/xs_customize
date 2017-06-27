@@ -14,7 +14,7 @@ if [ "$IPMI"=="y" ]; then
 
 # load modules for ipmi
 
-modprobe ipmi_si
+modprobe  ipmi_si
 modprobe ipmi_devintf
 
 # activate ipmi-modules permanently on host boot
