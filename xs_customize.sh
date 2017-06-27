@@ -39,10 +39,10 @@ fi
 
 
 
-read -rsp $'Is OMD Host reachable per ssh ? [y/n] ?\n' -n1 IPMI
+read -rsp $'Is OMD Host reachable per ssh ? [y/n] ?\n' -n1 OMDIP
 
 
-if [ $IPMI == "y" ]; then
+if [ $OMDIP == "y" ]; then
 
 # install check_mk
 
