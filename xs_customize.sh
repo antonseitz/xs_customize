@@ -90,7 +90,7 @@ read -rsp $'Should we make mount point for /snapshots or   to cancel ? (CTRL-C).
 
 ls -la /dev/disk/by-uuid
 echo
-
+echo
 read -rsp $'Copy UUID from above for Pasting in /etc/fstab ...\n' -n1
 # mkdir Backup mount
 mkdir /snapshots
