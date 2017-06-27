@@ -93,6 +93,12 @@ echo " /dev/disk/by-uuid :"
 echo
 
 ls -la /dev/disk/by-uuid
+echo 
+echo " blkid  :"
+blkid
+echo
+
+
 echo
 echo
 read -rsp $'Copy UUID from above for Pasting in /etc/fstab ...\n' -n1
