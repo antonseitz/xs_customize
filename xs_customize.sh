@@ -4,20 +4,15 @@
 
 yum --enablerepo=base -y install mc xinetd 
 
-
 read -rsp $'Has this Host IPMI [y/n] ?\n' -n1 IPMI
-
 
 if [ $IPMI == "y" ]; then
 
-
 # load modules for ipmi
-
 modprobe ipmi_si
 modprobe ipmi_devintf
 
 # activate ipmi-modules permanently on host boot
-
 chmod +x /etc/sysconfig/modules/ipmi_si.modules
 chmod +x /etc/sysconfig/modules/ipmi_devintf.modules
 
@@ -26,26 +21,20 @@ echo "modprobe ipmi_devintf" > /etc/sysconfig/modules/ipmi_devintf.modules
 
 read -rsp $'Press key to continue OR CTRL-C to cancel...\n' -n1
 
-
 # test ipmi sensors
 
 ipmitool sensor
-
 
 read -rsp $'Press key to continue OR CTRL-C to cancel...\n' -n1
 
 fi
 
-
-
-
-read -rsp $'Is OMD Host reachable per ssh ? [y/n] ?\n' -n1 OMDIP
+read -rsp $'Is the OMD Host reachable per ssh ? [y/n] ?\n' -n1 OMDIP
 
 
 if [ $OMDIP == "y" ]; then
 
 # install check_mk
-
 read -rsp $'Enter IP of Check_mk host : ' IP
 scp root@$IP:/omd/versions/default/share/check_mk/agents/check_mk_agent.linux /usr/bin/check_mk_agent
 scp root@$IP:/omd/versions/default/share/check_mk/agents/xinetd.conf /etc/xinetd.d/check_mk
