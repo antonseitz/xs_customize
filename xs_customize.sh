@@ -92,11 +92,17 @@ echo
 
 echo " /dev/disk/by-uuid :"
 echo
-
 ls -la /dev/disk/by-uuid
+
 echo 
 echo " blkid  :"
 blkid
+
+echo 
+echo " by-id  :"
+ls -la /dev/disk/by-id
+
+
 echo
 
 
