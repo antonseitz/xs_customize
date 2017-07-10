@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "xinetd needs to be installed on target host!"
+
 echo "Pushes check_mk_linux from OMD host to remote machine"
 
 read -rsp "Enter IP of remote machine : " IP
