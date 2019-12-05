@@ -1,11 +1,11 @@
 #!/bin/bash
 
-if [ -f /etc/debian_version ] ; then.
+if [ -f /etc/debian_version ] ; then
 OS="Debian"
 Version=$( cat /etc/debian_version )
 fi
 
-if [ -f /etc/centos-release ] ; then.
+if [ -f /etc/centos-release ] ; then
 OS="CentOS"
 Version=$( cat /etc/centos-release )
 fi
@@ -13,21 +13,19 @@ fi
 LSB=$(lsb_release -d)
 
 
-if [ -v OS ] ; then.
+if [ -v OS ] ; then
 
 echo "0 Linux_Distro - OK  $OS"
 fi
 
 
-if [ -v Version ] ; then.
+if [ -v Version ] ; then
 
 echo "0 Linux_Distro_Version - OK  Version: $Version $LSB"
 
 fi
 
-
-
-echo "0 Linux_Distro_Version_Uname - OK  Kernel (Name: $(uname -s); Release: $(uname -r); Version: $(uname -v) ) Machine (Hardware: $(uname -m); CPU: $(uname -p); Platform:$
+echo "0 Linux_Distro_Version_Uname - OK  Kernel (Name: $(uname -s); Release: $(uname -r); Version: $(uname -v) ) Machine (Hardware: $(uname -m); CPU: $(uname -p); Platform:$(uname -i ) ) "
 
 
 exit 0
