@@ -5,20 +5,29 @@ OS="Debian"
 Version=$( cat /etc/debian_version )
 fi
 
-if [ -f /etc/debian_version ] ; then.
-OS="Debian"
-Version=$( cat /etc/debian_version )
+if [ -f /etc/centos-release ] ; then.
+OS="CentOS"
+Version=$( cat /etc/centos-release )
 fi
 
+LSB=$(lsb_release -d)
 
 
 if [ -v OS ] ; then.
 
-echo "0 Linux_Version - OK  $OS"
+echo "0 Linux_Distro - OK  $OS"
 fi
 
 
 if [ -v Version ] ; then.
 
-echo "0 Linux_Distro_Version - OK  Version: $Version"
+echo "0 Linux_Distro_Version - OK  Version: $Version $LSB"
+
 fi
+
+
+
+echo "0 Linux_Distro_Version_Uname - OK  Kernel (Name: $(uname -s); Release: $(uname -r); Version: $(uname -v) ) Machine (Hardware: $(uname -m); CPU: $(uname -p); Platform:$
+
+
+exit 0
