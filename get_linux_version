@@ -1,0 +1,24 @@
+#!/bin/bash
+
+if [ -f /etc/debian_version ] ; then.
+OS="Debian"
+Version=$( cat /etc/debian_version )
+fi
+
+if [ -f /etc/debian_version ] ; then.
+OS="Debian"
+Version=$( cat /etc/debian_version )
+fi
+
+
+
+if [ -v OS ] ; then.
+
+echo "0 Linux_Version - OK  $OS"
+fi
+
+
+if [ -v Version ] ; then.
+
+echo "0 Linux_Distro_Version - OK  Version: $Version"
+fi
