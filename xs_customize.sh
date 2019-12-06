@@ -54,7 +54,7 @@ fi
 # start xinetd 
 
 systemctl enable xinetd.service
-systemctl start xinetd.service
+systemctl restart xinetd.service
 
 netstat -lnp | grep 6556
 echo
