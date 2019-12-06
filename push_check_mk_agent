@@ -8,6 +8,7 @@ read -rsp "Enter IP of remote machine : " IP
 read -rsp "Enter PORT of remote machine : " PORT
 
 scp -P $PORT /omd/versions/default/share/check_mk/agents/check_mk_agent.linux root@$IP:/usr/bin/check_mk_agent
-scp -P $PORT /omd/versions/default/share/check_mk/agents/xinetd.conf root@$IP:/etc/xinetd.d/check_mk
-echo "If last scp failed, let's try the next one."
 scp -P $PORT /omd/versions/default/share/check_mk/agents/cfg_examples/xinetd.conf root@$IP:/etc/xinetd.d/check_mk
+#scp -P $PORT /omd/versions/default/share/check_mk/agents/cfg_examxinetd.conf root@$IP:/etc/xinetd.d/check_mk
+#echo "If last scp failed, let's try the next one."
+
