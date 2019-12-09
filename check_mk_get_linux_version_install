@@ -7,6 +7,6 @@ if [ $PLUGIN == "y" ]; then
 
 
 mkdir -p /usr/lib/check_mk_agent/local/
-cp  check_mk_local_plugin_get_linux_version /usr/lib/check_mk_agent/local/get_linux_version
-
+cp -f  check_mk_local_plugin_get_linux_version /usr/lib/check_mk_agent/local/get_linux_version
+chmod u+x  /usr/lib/check_mk_agent/local/get_linux_version
 fi
