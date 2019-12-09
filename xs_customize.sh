@@ -3,7 +3,7 @@
 
 echo "Installing mc and xinted per yum\n"
 
-yum --enablerepo=base -y install mc xinetd 
+yum --enablerepo=base -y install mc xinetd git
 echo
 read -rsp $'Has this Host IPMI [y/n] ?\n' -n1 IPMI
 
