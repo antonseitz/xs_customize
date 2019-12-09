@@ -1,7 +1,6 @@
 #!/bin/bash
 
 
-
 echo "Installing mc and xinted per yum\n"
 
 yum --enablerepo=base -y install mc xinetd 
@@ -46,8 +45,12 @@ echo
 read -rsp $'Press key to continue OR CTRL-C to cancel...\n' -n1
 
 else
+
+echo. 
+echo Host IPs:
+ifconfig 
 echo
-echo "So, you can use script push_check_mk_agent on OMD HOst to push on this machine!"
+echo "So, you should use NOW script push_check_mk_agent on OMD HOst to push on this machine!"
 echo
 fi
 
@@ -57,8 +60,13 @@ systemctl enable xinetd.service
 systemctl restart xinetd.service
 
 netstat -lnp | grep 6556
+
 echo
 read -rsp $'Press key to continue OR CTRL-C to cancel...\n' -n1
+telnet localhost 6556
+echo
+read -rsp $'Press key to continue OR CTRL-C to cancel...\n' -n1
+
 
 # make firewall exceptions
 echo "Add into /etc/sysconfig/iptables : \n"
@@ -67,6 +75,13 @@ echo
 read -rsp $'Press key to continue OR CTRL-C to cancel...\n' -n1
 
 nano /etc/sysconfig/iptables
+
+
+# start xinetd 
+
+systemctl enable xinetd.service
+systemctl restart xinetd.service
+
 
 service iptables restart
 service iptables reload 
