@@ -9,8 +9,8 @@ echo
 ehco Test, if IPMI availibla 
 dmidecode --type 38 | grep -A 30 IPMI || echo NO IPMI detected !
 
-echo. 
-echo 
+echo
+echo
 read -rsp $'Has this Host IPMI [y/n] ?\n' -n1 IPMI
 
 if [ $IPMI == "y" ]; then
