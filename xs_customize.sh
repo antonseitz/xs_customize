@@ -103,7 +103,7 @@ echo
 
 
 
-
+./check_mk_get_linux_version_install
 
 
 
