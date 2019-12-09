@@ -4,6 +4,7 @@
 echo "Installing mc and xinted per yum\n"
 
 yum --enablerepo=base -y install mc xinetd git
+
 echo
 read -rsp $'Has this Host IPMI [y/n] ?\n' -n1 IPMI
 
@@ -14,6 +15,7 @@ modprobe ipmi_si
 modprobe ipmi_devintf
 
 # activate ipmi-modules permanently on host boot
+
 
 echo "modprobe ipmi_si" > /etc/sysconfig/modules/ipmi_si.modules
 echo "modprobe ipmi_devintf" > /etc/sysconfig/modules/ipmi_devintf.modules
@@ -99,7 +101,25 @@ telnet $IP 6556
 echo 
 echo
 
-read -rsp $'Should we make mount point for /snapshots or   to cancel ? (CTRL-C)...\n' -n1
+
+
+
+echo
+read -rsp $'Should we install get_linux_version for check_mk [y/n] ?\n' -n1 PLUGIN
+
+if [ $PLUGIN == "y" ]; then
+
+
+mkdir -p /usr/lib/check_mk_agent/local/
+cp  check_mk_local_plugin_get_linux_version /usr/lib/check_mk_agent/local/get_linux_version
+
+fi
+
+
+
+read -rsp $'Should we make mount point for /snapshots  [y /n ]\n' -n1 SNAP
+
+if [ $SNAP == "y" ]; then
 
 echo " /dev/disk/by-path/ : "
 echo
@@ -137,7 +157,7 @@ mount /snapshots
 
 read -rsp $'Press key to continue OR CTRL-C to cancel...\n' -n1
 
-
+fi
 
 
 

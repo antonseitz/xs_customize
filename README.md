@@ -24,3 +24,11 @@ This script
 # push_check_mk_agent 
 
 Pushes check_mk agent from OMD host zu client
+
+
+# check_mk_local_plugin_get_linux_version
+
+Gets Linux Distro and Verison via local check_mk plugin
+Location:
+
+/usr/lib/check_mk_agent/local/
