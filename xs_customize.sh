@@ -2,20 +2,17 @@
 
 #ROT
 echo -e "\e[31mInstalling mc and xinted per yum\e[0m"
-
+# ROT AN     echo -e "\e[31m
+# ROT AUS    \e[0m"
+#ROT AUS      echo -e "\e[0m"
 yum --enablerepo=base -y install mc xinetd git
 
-
-echo -e "\e[31m \" 
-echo Testing, if IPMI isavailible:
+echo -e "\e[31mTesting, if IPMI isavailible:\e[0m"
 dmidecode --type 38 | grep -A 30 IPMI || echo NO IPMI detected !
 
-echo
-
-echo -e "\e[31m \" 
-echo
+echo -e "\e[31m
 read -rsp $'Has this Host IPMI [y/n] ?\n' -n1 IPMI
-
+ echo -e "\e[0m"
 if [ $IPMI == "y" ]; then
 
 # load modules for ipmi
