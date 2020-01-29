@@ -10,7 +10,7 @@ yum --enablerepo=base -y install mc xinetd git
 echo -e "\e[31mTesting, if IPMI isavailible:\e[0m"
 dmidecode --type 38 | grep -A 30 IPMI || echo NO IPMI detected !
 
-echo -e "\e[31m
+echo -e "\e[31m"
 read -rsp $'Has this Host IPMI [y/n] ?\n' -n1 IPMI
  echo -e "\e[0m"
 if [ $IPMI == "y" ]; then
