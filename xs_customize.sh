@@ -1,15 +1,18 @@
 #!/bin/bash
 
-
-echo "Installing mc and xinted per yum\n"
+#ROT
+echo -e "\e[31mInstalling mc and xinted per yum\e[0m"
 
 yum --enablerepo=base -y install mc xinetd git
 
-echo
+
+echo -e "\e[31m \" 
 echo Testing, if IPMI isavailible:
 dmidecode --type 38 | grep -A 30 IPMI || echo NO IPMI detected !
 
 echo
+
+echo -e "\e[31m \" 
 echo
 read -rsp $'Has this Host IPMI [y/n] ?\n' -n1 IPMI
 
@@ -21,6 +24,7 @@ modprobe ipmi_devintf
 
 # activate ipmi-modules permanently on host boot
 
+echo -e "\e[31m \" 
 
 echo "modprobe ipmi_si" > /etc/sysconfig/modules/ipmi_si.modules
 echo "modprobe ipmi_devintf" > /etc/sysconfig/modules/ipmi_devintf.modules
@@ -47,7 +51,7 @@ if [ $OMDIP == "y" ]; then
 echo
 read -rsp $'Enter IP of Check_mk host : ' IP
 scp root@$IP:/omd/versions/default/share/check_mk/agents/check_mk_agent.linux /usr/bin/check_mk_agent
-scp root@$IP:/omd/versions/default/share/check_mk/agents/xinetd.conf /etc/xinetd.d/check_mk
+scp root@$IP:/omd/versions/default/share/check_mk/agents/cfg_examples/xinetd.conf /etc/xinetd.d/check_mk
 echo
 read -rsp $'Press key to continue OR CTRL-C to cancel...\n' -n1
 
