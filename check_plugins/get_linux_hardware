@@ -1,0 +1,28 @@
+#!/bin/python
+# -*- coding: utf-8 -*-
+
+
+
+# GIBT LSPCI AUS
+
+# TODO: Schöneres Layout
+
+from  subprocess import check_output
+import re
+
+
+lspci=check_output(["lspci" , "-k"])
+
+# Alle Umbrüche ( 0xA0 = LF) als \n anzeigen lassen:
+lspci = repr(lspci)#
+
+# Alle \n in \\ umwandeln
+# den \ von \n muss man im regex auch escapten: \\ = \ 
+lspci = re.sub(r'\\n', "\\\\n", lspci)
+# Tabs rauslöschen:
+lspci = re.sub(r'\\t', "", lspci)
+
+# die Ausgabe von repr (s.o.) hat immer single quotes. wir löschen sie:
+lspci = re.sub(r'\'', "", lspci)
+
+print  '0 Linux_Hardware - OK  Output of lspci:\\n' + lspci
