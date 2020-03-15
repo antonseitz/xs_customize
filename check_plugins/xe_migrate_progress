@@ -12,6 +12,7 @@ diff= now_local - now
 #print "NOW: " + str(now)
 created=False
 progress=False
+output=" none running"
 #try:
 xe_tasklist = subprocess.check_output(["xe", "task-list", "name-label=Async.VM.migrate_send",  "status=pending","params=progress,created" ])
 #except subprocess.CalledProcessError as xe_tasklist:
@@ -44,14 +45,16 @@ if ( created and  progress) :
 	dauertschon_s=dauertschon.total_seconds()
 	dauertinsgesamt_s= dauertschon_s/progress 
 	dauertnoch_s=dauertinsgesamt_s  - dauertschon_s
-	dauertnoch=datetime.timedelta(seconds=dauertnoch_s)
+	dauertnoch_m=int(dauertnoch_s/60)
+	dauertnoch=datetime.timedelta(seconds=dauertnoch_s)	
 	#print "Dauert schon : " + str(dauertschon_s) + " Sekunden"
 	#print "Dauert insgesamt: " + str(dauertinsgesamt_s) + " Sekunden"
 	#print "Dauert noch: " + str(dauertnoch_s) + " Sekunden"
 	#print "Dauert noch: " + str(dauertnoch) 
-	#ende = now + dauertnoch + diff
+	ende = now + dauertnoch + diff
 	#print ende
+	output="Progress: " + str(progress*100)+ " % ; ends in :   " + str(dauertnoch).split(".")[0] +" (hh:mm:ss) Endtime: " + str(ende).split(".")[0]
 
 
-print "0 XenServer_Migration_Task laeftnoch=" + str(dauertnoch_s) +"s OK  Migrationtask ends:   " + str(dauertnoch)
+print "0 XenServer_Migration_Task Progress=" + str(progress*100) +"% OK  Migrationtask - " + output
 sys.exit(0)
