@@ -1,0 +1,57 @@
+#!/bin/python
+# -*- coding: utf-8 -*-
+import datetime, subprocess,sys,time
+
+dauertnoch_s=0
+dauertnoch=" none running"
+#from dateutil import tz
+# Das Startdatum von XE ist UTC, also rechnen wir auch mit UTC
+now= datetime.datetime.utcnow()
+now_local= datetime.datetime.now()
+diff= now_local - now
+#print "NOW: " + str(now)
+created=False
+progress=False
+#try:
+xe_tasklist = subprocess.check_output(["xe", "task-list", "name-label=Async.VM.migrate_send",  "status=pending","params=progress,created" ])
+#except subprocess.CalledProcessError as xe_tasklist:
+#    print "error code", xe_tasklist.returncode, xe_tasklist.output
+#    rsy_is_running=xe_tasklist.returncode  # damit wir den returncode weiter unten verwenden können
+#print "Raw Output:"
+#print xe_tasklist
+#print "Raw Output END "
+for line in xe_tasklist.splitlines():
+	if "created" in line:
+		created=line.split(":",1)[1]
+
+		
+
+	if "progress" in line:
+		progress=float(line.split(":")[1])
+		
+
+if ( created and  progress) :
+	
+
+
+	# 20200315T13:53:33Z
+	created_py = datetime.datetime.strptime(created, " %Y%m%dT%H:%M:%SZ")
+	#print "Created: "  + created
+	#print "Created pY: "  + str(created_py)
+	#print "Elapsed: " + str( now - created_py)
+	#print "Progress: " + str( progress*100) + " %"
+	dauertschon = ( now - created_py )
+	dauertschon_s=dauertschon.total_seconds()
+	dauertinsgesamt_s= dauertschon_s/progress 
+	dauertnoch_s=dauertinsgesamt_s  - dauertschon_s
+	dauertnoch=datetime.timedelta(seconds=dauertnoch_s)
+	#print "Dauert schon : " + str(dauertschon_s) + " Sekunden"
+	#print "Dauert insgesamt: " + str(dauertinsgesamt_s) + " Sekunden"
+	#print "Dauert noch: " + str(dauertnoch_s) + " Sekunden"
+	#print "Dauert noch: " + str(dauertnoch) 
+	#ende = now + dauertnoch + diff
+	#print ende
+
+
+print "0 XenServer_Migration_Task laeftnoch=" + str(dauertnoch_s) +"s OK  Migrationtask ends:   " + str(dauertnoch)
+sys.exit(0)
