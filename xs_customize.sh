@@ -201,7 +201,7 @@ echo
 red
 read -rsp $'Should we make mount point for /snapshots  [y /n ]\n' -n1 SNAP
 nor
-if [ $SNAP == "y" ]; then
+if [ "$SNAP" == "y" ]; then
 
 echo " /dev/disk/by-path/ : "
 echo
@@ -245,3 +245,30 @@ fi
 
 
 # TODO INstall MegaCli, StorCli
+
+
+red
+read -rsp $'Should we install RAID-Tools ?  [y /n ]\n' -n1 RAID
+nor
+if [ $RAID == "y" ]; then
+
+#if [ $('hostname') == "icoms" ]; then
+
+echo "HOSTNAME: $HOSTNAME"
+fi
+
+installcmd="raidtools/$HOSTNAME/installcmd"
+
+if [ -f "$installcmd" ]; then
+
+echo "JA"
+
+$installcmd  $('pwd')"/raidtools/"$HOSTNAME
+else
+echo "ERROR: install not found"
+
+#fi
+
+#fi
+fi
+
