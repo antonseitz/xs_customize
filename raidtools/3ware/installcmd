@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ -f "/usr/sbin/tw_cli" ]; then
+rm /usr/sbin/tw_cli
+fi
+cp $1/tw_cli.x86_64 /usr/sbin/tw_cli
+chmod u+x /usr/sbin/tw_cli
+echo "3Ware installed!"
+

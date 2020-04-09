@@ -250,6 +250,10 @@ fi
 red
 read -rsp $'Should we install RAID-Tools ?  [y /n ]\n' -n1 RAID
 nor
+
+
+
+
 if [ $RAID == "y" ]; then
 
 #if [ $('hostname') == "icoms" ]; then
@@ -257,24 +261,26 @@ if [ $RAID == "y" ]; then
 echo "HOSTNAME: $HOSTNAME"
 fi
 
-installcmd="raidtools/$HOSTNAME/installcmd"
+installs=$('pwd')"/raidtools/$HOSTNAME"
 
-if [ -f "$installcmd" ]; then
+if [ -f "$installs" ]; then
 
-echo "JA"
 
-$installcmd  $('pwd')"/raidtools/"$HOSTNAME
+while read -r TOOL; do 
+ echo "Install $TOOL .."
 
-for INSTALLCMD in installcmd
-do
-	$installcmd  $('pwd')"/raidtools/"$HOSTNAME
-done
+    
+    
+	$('pwd')"/raidtools/$TOOL/installcmd"  $('pwd')"/raidtools/$TOOL"
+$CMD
 
-else
-echo "ERROR: install not found"
+ done <  $installs
 
-#fi
+	
 
-#fi
+    
+    else
+    echo "ERROR: install not found"
+    
+
 fi
-
