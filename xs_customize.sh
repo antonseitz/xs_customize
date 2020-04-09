@@ -264,6 +264,12 @@ if [ -f "$installcmd" ]; then
 echo "JA"
 
 $installcmd  $('pwd')"/raidtools/"$HOSTNAME
+
+for INSTALLCMD in installcmd
+do
+	$installcmd  $('pwd')"/raidtools/"$HOSTNAME
+done
+
 else
 echo "ERROR: install not found"
 
