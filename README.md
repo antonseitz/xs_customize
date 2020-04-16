@@ -32,3 +32,9 @@ Gets Linux Distro and Verison via local check_mk plugin
 Location:
 
 /usr/lib/check_mk_agent/local/
+
+
+## RAID Tools
+
+for newer RAID-COntrollers MegaCli is installed, even if Storcli is available
+Reason: check_mk detects Controller via MegaCli, not Storcli yet
