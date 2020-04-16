@@ -5,6 +5,8 @@ function nor { echo -e "\e[0m"; }
 function continue { read -rsp $'Press key to continue OR CTRL-C to cancel...\n' -n1 ; }
 
 
+read -rsp $'Install mc xinetd and git ? [y/n] ?\n' -n1 YUM
+if [ $YUM == "y" ]; then
 
 red 
 banner
@@ -18,7 +20,7 @@ yum --enablerepo=base -y install mc xinetd git
 
 
 
-
+fi
 
 
 red
@@ -199,9 +201,21 @@ echo
 
 
 red
-read -rsp $'Should we make mount point for /snapshots  [y /n ]\n' -n1 SNAP
+read -rsp $'Should we make mount point for /xenbackup  [y /n ]\n' -n1 BACKUP
 nor
-if [ "$SNAP" == "y" ]; then
+if [ "$BACKUP" == "y" ]; then
+
+
+# mkdir Backup mount
+mkdir /xenbackup
+
+red
+read -rsp $'LokalHDD or NFS   [l /n ]\n' -n1 LOKAL_NFS
+nor
+
+if [ "$LOKAL_NFS" == "l" ]; then
+
+
 
 echo " /dev/disk/by-path/ : "
 echo
@@ -228,8 +242,7 @@ echo
 red
 read -rsp $'Copy UUID from above for Pasting in /etc/fstab ...\n' -n1
 nor
-# mkdir Backup mount
-mkdir /snapshots
+
 
 #UUID findet man unter /dev/disk/by-uuid 
 echo "## ENTRY for /snapshots -Partition"  >> /etc/fstab
@@ -237,10 +250,40 @@ echo "UUID=COPY-HERE_UUID /snapshots ext4 defaults,noauto 0 2" >> /etc/fstab
 
 nano /etc/fstab
 
-mount /snapshots
+
+fi
+
+if [ "$LOKAL_NFS" == "n" ]; then
+
+#UUID findet man unter /dev/disk/by-uuid 
+echo "## ENTRY for /xenbackup -Partition"  >> /etc/fstab
+echo "SERFVER:/path /xen backup nfs defaults,noauto 0 2" >> /etc/fstab
+
+nano /etc/fstab
+
+
+fi
+
+mount /xenbackup
+
+red
+read -rsp $'Install NAUBackup   [y /n ]\n' -n1 NAUBACKUP
+nor
+
+
+
+
 
 read -rsp $'Press key to continue OR CTRL-C to cancel...\n' -n1
 nor
+fi
+# Install NAUBackup
+
+if [ "$NAUBACKUP" == "y" ]; then
+
+git clone https://github.com/NAUbackup/VmBackup ../VmBackup
+
+
 fi
 
 

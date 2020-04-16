@@ -21,6 +21,9 @@ xe_tasklist = subprocess.check_output(["xe", "task-list", "name-label=Async.VM.m
 #print "Raw Output:"
 #print xe_tasklist
 #print "Raw Output END "
+status="OK"
+status_num=0
+
 for line in xe_tasklist.splitlines():
 	if "created" in line:
 		created=line.split(":",1)[1]
@@ -30,8 +33,7 @@ for line in xe_tasklist.splitlines():
 	if "progress" in line:
 		progress=float(line.split(":")[1])
 		
-	status="OK"
-	status_num=0
+
 
 if ( created and  progress) :
 	
