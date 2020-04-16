@@ -3,7 +3,7 @@
 import subprocess , os, stat, socket
 
 
-execfile( "helper.py")
+execfile( "py_helper/helper.py")
 
 root=os.getcwd()
 
