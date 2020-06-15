@@ -150,11 +150,14 @@ if check_mk=="" :
 	iptables=open("/etc/sysconfig/iptables", "r")
 	for x in iptables:
 		iptables_new.write(x)
-		if "dport 80" in x:
+		if "dport 443" in x:
 			iptables_new.write("-A RH-Firewall-1-INPUT -m conntrack --ctstate NEW -m tcp -p tcp --dport 6556 -j ACCEPT \n")
 	iptables.close()
 	iptables_new.close()
-
+	if(os.path.exists("/etc/sysconfig/iptables_old")):
+		os.remove("/etc/sysconfig/iptables_old")
+	os.rename("/etc/sysconfig/iptables", "/etc/sysconfig/iptables_old")
+	os.rename("/etc/sysconfig/iptables_new", "/etc/sysconfig/iptables")
 	print("..iptables modified!")
 
 	banner( "XINETD and IPTABLES: Now restarting...")
