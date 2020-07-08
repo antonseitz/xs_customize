@@ -1,19 +1,21 @@
 #!/bin/python
 
-import subprocess , os, stat, socket
+import subprocess , os, stat, socket, platform
 
 
 execfile( "py_helper/helper.py")
 
 root=os.getcwd()
 
-banner("YUM")
+banner("YUM or APT")
 
 yum = ask("Install mc, xinetd and git ? ")
-
+distro=platform.dist()[0]
 if yum =="":
-		
-	os.system("/usr/bin/yum --enablerepo=base -y install mc xinetd git")
+	if distro=="Ubuntu":
+		os.system("/usr/bin/apt install mc xinetd git ipmitool")
+	else:
+		os.system("/usr/bin/yum --enablerepo=base -y install mc xinetd git")
 		
 
 
