@@ -12,9 +12,10 @@ for path, dirs, files in os.walk('check_plugins'):
 		if install == "" :
 			print "installing "  + file + " ...\n"
 			if os.path.isdir("/usr/lib/check_mk_agent/local/") is False :
+				print "no dir .. creating"
 				os.makedirs ("/usr/lib/check_mk_agent/local/")
 			shutil.copy( os.path.join (path , file) , "/usr/lib/check_mk_agent/local/" ) 
-						
+			
 			
 			os.chmod ( os.path.join("/usr/lib/check_mk_agent/local/" , file ) , 0o700)
 		else:
