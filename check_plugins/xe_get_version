@@ -1,0 +1,30 @@
+#!/bin/python
+# -*- coding: utf-8 -*-
+
+import datetime, subprocess,sys,time
+
+
+xensource=open('/etc/xensource-inventory')
+lines=xensource.readlines()
+
+count=0
+for line in lines:
+	count+=1
+	vars=line.split("=")
+	if  vars[0]=="INSTALLATION_UUID" :
+		
+		uuid=vars[1]
+		
+		
+	
+uuid=uuid.replace("'","")
+uuid=uuid.replace("\n","")
+
+xe_version = subprocess.check_output(["xe", "host-param-get", "uuid=" + uuid ,  "param-name=software-version" ])
+
+
+
+print "0 XenServer_Version Version=" + xe_version
+sys.exit(0)
+
+

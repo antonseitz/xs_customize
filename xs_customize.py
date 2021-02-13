@@ -77,10 +77,11 @@ if check_mk=="" :
 
 		banner( "CHECK_MK: installing per scp" )
 	
-		ip=ask_text("Enter IP of Check_mk host [my default 192.168.1.12 ] : ")
+		ip=ask_text("Enter IP of Check_mk host [my default chk.puckit.de ] : ")
+		port=ask_text("Enter  ssh port of Check_mk host [default 22 ] : ")
 		if ip!="":
-			os.system("scp root@" + ip + ":/omd/versions/default/share/check_mk/agents/check_mk_agent.linux /usr/bin/check_mk_agent")
-			os.system("scp root@" + ip + ":/omd/versions/default/share/check_mk/agents/cfg_examples/xinetd.conf /etc/xinetd.d/check_mk")
+			os.system("scp -P " + port +  " root@" + ip + ":/omd/versions/default/share/check_mk/agents/check_mk_agent.linux /usr/bin/check_mk_agent")
+			os.system("scp -P " + port +  " root@" + ip + ":/omd/versions/default/share/check_mk/agents/cfg_examples/xinetd.conf /etc/xinetd.d/check_mk")
 		else:
 			print("NO IP GIVEN")
 	else:
