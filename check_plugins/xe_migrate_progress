@@ -12,15 +12,12 @@ diff= now_local - now
 #print "NOW: " + str(now)
 created=False
 progress=False
+task="None"
 output=" none running"
-#try:
-xe_tasklist = subprocess.check_output(["xe", "task-list", "name-label=Async.VM.migrate_send",  "status=pending","params=progress,created" ])
-#except subprocess.CalledProcessError as xe_tasklist:
-#    print "error code", xe_tasklist.returncode, xe_tasklist.output
-#    rsy_is_running=xe_tasklist.returncode  # damit wir den returncode weiter unten verwenden können
-#print "Raw Output:"
-#print xe_tasklist
-#print "Raw Output END "
+
+xe_tasklist = subprocess.check_output(["xe", "task-list",  "status=pending","params=progress,created,name-label" ])
+
+
 status="OK"
 status_num=0
 
@@ -33,7 +30,8 @@ for line in xe_tasklist.splitlines():
 	if "progress" in line:
 		progress=float(line.split(":")[1])
 		
-
+	if "name-label" in line:
+		task=line.split(":")[1]
 
 if ( created and  progress) :
 	
@@ -58,8 +56,8 @@ if ( created and  progress) :
 	#print "Dauert noch: " + str(dauertnoch) 
 	ende = now + dauertnoch + diff
 	#print ende
-	output="Progress: " + str(progress*100) + "% ; ends in :   " + str(dauertnoch).split(".")[0] +" (hh:mm:ss) Endtime: " + str(ende).split(".")[0]
+	output="Task: " + task + " - Progress: " + str(progress*100) + "% ; ends in :   " + str(dauertnoch).split(".")[0] +" (hh:mm:ss) Endtime: " + str(ende).split(".")[0]
 
 
-print str(status_num) + " XenServer_Migration_Task Progress=" + str(progress*100).split(".")[0] +"%  Migrationtask - " + output
+print str(status_num) + " XenServer_Migration_Task Progress=" + str(progress*100).split(".")[0] +"%  xe list-task - " + output
 sys.exit(status_num)
