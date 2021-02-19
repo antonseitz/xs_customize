@@ -25,4 +25,4 @@ lspci = re.sub(r'\\t', "", lspci)
 # die Ausgabe von repr (s.o.) hat immer single quotes. wir löschen sie:
 lspci = re.sub(r'\'', "", lspci)
 
-print  '0 Linux_Hardware - OK  Output of lspci:\\n' + lspci
+print  '0 Linux_Hardware - OK  Output of lspci: (Details in long output)\\n' + lspci
