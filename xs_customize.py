@@ -1,15 +1,18 @@
 #!/bin/python
 
-import subprocess , os, stat, socket, platform
+import subprocess , os, stat, socket, platform,sys
 
 
-execfile( "py_helper/helper.py")
+#execfile( "./py_helper/helper.py")
+#sys.path.insert(0, './py_helper/')
 
+sys.path.append("./py_helper")
+import helper
 root=os.getcwd()
 
-banner("YUM or APT")
+helper.banner("YUM or APT")
 
-yum = ask("Install mc, xinetd and git ? ")
+yum = helper.ask("Install mc, xinetd and git ? ")
 distro=platform.dist()[0]
 if yum =="":
 	if distro=="Ubuntu":
@@ -20,15 +23,15 @@ if yum =="":
 
 
 
-banner("TEST: is IPMI availible ?")
+helper.banner("TEST: is IPMI availible ?")
 
-ipmi=ask("Install IPMI ? ")
+ipmi=helper.ask("Install IPMI ? ")
 if ipmi=="":
 
 
 	subprocess.call("dmidecode --type 38 | grep -A 30 IPMI || echo NO IPMI detected !", shell=True)
 
-	ipmi=ask("Check output above  ^^^  Has this Host IPMI ? ")
+	ipmi=helper.ask("Check output above  ^^^  Has this Host IPMI ? ")
 
 	if ipmi=="":
 			
@@ -41,7 +44,7 @@ if ipmi=="":
 		subprocess.call("ipmitool sensor", shell=True)
 		
 		
-		if  ask("Check output above. Any sensors visible ?") != "":
+		if  helper.ask("Check output above. Any sensors visible ?") != "":
 			print("Aborted!")
 			exit()
 			
@@ -65,34 +68,34 @@ if ipmi=="":
 	
 
 	
-banner("INSTALL Check_mk AGENT")
+helper.banner("INSTALL Check_mk AGENT")
 
-check_mk=ask("Should we install check_mk agent ?")
+check_mk=helper.ask("Should we install check_mk agent ?")
 if check_mk=="" :
 	
 	
-	ssh=ask("Is the OMD Host reachable per ssh ? ")
+	ssh=helper.ask("Is the OMD Host reachable per ssh ? ")
 	
 	
 
 	if ssh== "" :
 
-		banner( "CHECK_MK: installing per scp" )
+		helper.banner( "CHECK_MK: installing per scp" )
 	
-		ip=ask_text("Enter IP of Check_mk host [my default chk.puckit.de ] : ")
-		port=ask_text("Enter  ssh port of Check_mk host [default 22 ] : ")
+		ip=helper.ask_text("Enter IP of Check_mk host [my default chk.puckit.de ] : ")
+		port=helper.ask_text("Enter  ssh port of Check_mk host [default 22 ] : ")
 		if ip!="":
 			os.system("scp -P " + port +  " root@" + ip + ":/omd/versions/default/share/check_mk/agents/check_mk_agent.linux /usr/bin/check_mk_agent")
 			os.system("scp -P " + port +  " root@" + ip + ":/omd/versions/default/share/check_mk/agents/cfg_examples/xinetd.conf /etc/xinetd.d/check_mk")
 		else:
 			print("NO IP GIVEN")
 	else:
-		banner ("CHECK_MK: installing per push")
+		helper.banner ("CHECK_MK: installing per push")
 	
 	
 		print ("IPs of this host: ")
 		os.system("ifconfig | grep inet")
-		done= ask ("STOP : You should use NOW the script push_check_mk_agent on OMD Host to push to this machine!")
+		done= helper.ask ("STOP : You should use NOW the script push_check_mk_agent on OMD Host to push to this machine!")
 	
 		if done!="":
 			print("Aborted!")
@@ -101,8 +104,8 @@ if check_mk=="" :
 	
 
 
-	banner("Starting XINETD")
-	xinetd=ask("Should we start XINETD for check_mk ?")
+	helper.banner("Starting XINETD")
+	xinetd=helper.ask("Should we start XINETD for check_mk ?")
 	if xinetd=="":
 		os.system("systemctl enable xinetd.service")
 		os.system("systemctl restart xinetd.service")
@@ -111,7 +114,7 @@ if check_mk=="" :
 
 
 
-	banner( "CHECK: is xinetd listening on port 6556 (ipv4) ?")
+	helper.banner( "CHECK: is xinetd listening on port 6556 (ipv4) ?")
 
 
 	port=os.system("netstat -lnp | grep 6556")
@@ -126,7 +129,7 @@ if check_mk=="" :
 		
 		
 		
-	banner("CHECK is check_mk responding on LOCALHOST:6556 (ipv4)?")
+	helper.banner("CHECK is check_mk responding on LOCALHOST:6556 (ipv4)?")
 
 
 
@@ -136,7 +139,7 @@ if check_mk=="" :
 	os.system("telnet localhost 6556 | tail -n 20 ")
 
 
-	if ask("Output OK ?")!="":
+	if helper.ask("Output OK ?")!="":
 		print("Aborting!")
 		exit()
 
@@ -144,7 +147,7 @@ if check_mk=="" :
 
 
 
-	banner( "FIREWALL: Open now port 6556 for check_mk" )
+	helper.banner( "FIREWALL: Open now port 6556 for check_mk" )
 
 
 	
@@ -163,7 +166,7 @@ if check_mk=="" :
 	os.rename("/etc/sysconfig/iptables_new", "/etc/sysconfig/iptables")
 	print("..iptables modified!")
 
-	banner( "XINETD and IPTABLES: Now restarting...")
+	helper.banner( "XINETD and IPTABLES: Now restarting...")
 
 	os.system("systemctl enable xinetd.service")
 	os.system("systemctl restart xinetd.service")
@@ -177,26 +180,26 @@ if check_mk=="" :
 
 	os.system("ifconfig | grep -B 1 inet")
 		
-	ip=ask_text("Gimme local IP address: ")
-	banner("CHECK is check_mk responding on " + ip + ":6556 (ipv4)?")
+	ip=helper.ask_text("Gimme local IP address: ")
+	helper.banner("CHECK is check_mk responding on " + ip + ":6556 (ipv4)?")
 
 	print ( "last 20 lines of output: ")
 
 	os.system("telnet " + ip + " 6556 | tail -n 20 ")
 
 
-	if ask("Output OK ?")!="":
+	if helper.ask("Output OK ?")!="":
 		print("Aborting!")
 		exit()
 	
-plugins=ask("Install my check_mk plugins ?")
+plugins=helper.ask("Install my check_mk plugins ?")
 if plugins=="":
-	banner(" INSTALL MY CHECK_MK PLUGINS ")
+	helper.banner(" INSTALL MY CHECK_MK PLUGINS ")
 	execfile( root  + "/check_mk_install_my_plugins.py")
 	
 
 
-banner("Install MegaCli, StorCli, tw_cli")
+helper.banner("Install MegaCli, StorCli, tw_cli")
 
 
 
@@ -204,7 +207,7 @@ banner("Install MegaCli, StorCli, tw_cli")
 
 
 
-raid=ask("Should we install RAID-Tools ")
+raid=helper.ask("Should we install RAID-Tools ")
 
 
 if raid=="" :
