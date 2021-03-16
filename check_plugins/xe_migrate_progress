@@ -22,6 +22,12 @@ status="OK"
 status_num=0
 
 for line in xe_tasklist.splitlines():
+	if "name-label" in line:
+		task=line.split(":")[1]
+		# use only info from export tasks
+		if not "Export" in task :
+		    print "JA"
+		    continue
 	if "created" in line:
 		created=line.split(":",1)[1]
 
@@ -30,8 +36,6 @@ for line in xe_tasklist.splitlines():
 	if "progress" in line:
 		progress=float(line.split(":")[1])
 		
-	if "name-label" in line:
-		task=line.split(":")[1]
 
 if ( created and  progress) :
 	
@@ -61,3 +65,6 @@ if ( created and  progress) :
 
 print str(status_num) + " XenServer_Migration_Task Progress=" + str(progress*100).split(".")[0] +"%  xe list-task - " + output
 sys.exit(status_num)
+
+
+

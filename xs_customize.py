@@ -16,9 +16,9 @@ yum = helper.ask("Install mc, xinetd and git ? ")
 distro=platform.dist()[0]
 if yum =="":
 	if distro=="Ubuntu":
-		os.system("/usr/bin/apt install mc xinetd git ipmitool")
+		os.system("/usr/bin/apt install mc xinetd git ipmitool iotop")
 	else:
-		os.system("/usr/bin/yum --enablerepo=base -y install mc xinetd git")
+		os.system("/usr/bin/yum --enablerepo=base -y install mc xinetd git iotop ")
 		
 
 
@@ -70,36 +70,36 @@ if ipmi=="":
 	
 helper.banner("INSTALL Check_mk AGENT")
 
-check_mk=helper.ask("Should we install check_mk agent ?")
+check_mk=helper.ask("Should we config iptables for check_mk agent ?")
 if check_mk=="" :
 	
 	
-	ssh=helper.ask("Is the OMD Host reachable per ssh ? ")
+#	ssh=helper.ask("Is the OMD Host reachable per ssh ? ")
 	
 	
 
-	if ssh== "" :
+#	if ssh== "" :
 
-		helper.banner( "CHECK_MK: installing per scp" )
+#		helper.banner( "CHECK_MK: installing per scp" )
 	
-		ip=helper.ask_text("Enter IP of Check_mk host [my default chk.puckit.de ] : ")
-		port=helper.ask_text("Enter  ssh port of Check_mk host [default 22 ] : ")
-		if ip!="":
-			os.system("scp -P " + port +  " root@" + ip + ":/omd/versions/default/share/check_mk/agents/check_mk_agent.linux /usr/bin/check_mk_agent")
-			os.system("scp -P " + port +  " root@" + ip + ":/omd/versions/default/share/check_mk/agents/cfg_examples/xinetd.conf /etc/xinetd.d/check_mk")
-		else:
-			print("NO IP GIVEN")
-	else:
-		helper.banner ("CHECK_MK: installing per push")
+#		ip=helper.ask_text("Enter IP of Check_mk host [my default chk.puckit.de ] : ")
+#		port=helper.ask_text("Enter  ssh port of Check_mk host [default 22 ] : ")
+#		if ip!="":
+#			os.system("scp -P " + port +  " root@" + ip + ":/omd/versions/default/share/check_mk/agents/check_mk_agent.linux /usr/bin/check_mk_agent")
+#			os.system("scp -P " + port +  " root@" + ip + ":/omd/versions/default/share/check_mk/agents/cfg_examples/xinetd.conf /etc/xinetd.d/check_mk")
+#		else:
+#			print("NO IP GIVEN")
+#	else:
+#		helper.banner ("CHECK_MK: installing per push")
 	
 	
-		print ("IPs of this host: ")
-		os.system("ifconfig | grep inet")
-		done= helper.ask ("STOP : You should use NOW the script push_check_mk_agent on OMD Host to push to this machine!")
+#		print ("IPs of this host: ")
+#		os.system("ifconfig | grep inet")
+#		done= helper.ask ("STOP : You should use NOW the script push_check_mk_agent on OMD Host to push to this machine!")
 	
-		if done!="":
-			print("Aborted!")
-			exit()
+#		if done!="":
+#			print("Aborted!")
+#			exit()
 	
 	
 
