@@ -234,8 +234,14 @@ if nfs=="":
     if os.path.isdir("/backup") is False :
         print "no dir .. creating"
         os.makedirs ("/backup")
-    fstab=open("/etc/fstab", "w")
+    fstab=open("/etc/fstab", "r")
+    #fstab_new=open("/etc/fstab_new", "w")
     for line in fstab:
+        print line
         if not line =="192.168.0.67:/backup /backup nfs rw 0 0":
-            fstab.append("192.168.0.67:/backup /backup nfs rw 0 0")
+            print  "NEIN"
+        
+    fstab.close
+    #        fstab=open("/etc/fstab", "w")
+    #        fstab.append("192.168.0.67:/backup /backup nfs rw 0 0")
     
