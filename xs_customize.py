@@ -232,7 +232,7 @@ helper.banner("NFS Mount")
 nfs=helper.ask("Make NFS Mount ? ")
 if nfs=="":
     if os.path.isdir("/backup") is False :
-         print "no dir .. creating"
+        print "no dir .. creating"
         os.makedirs ("/backup")
     fstab=open("/etc/fstab", "w")
     for line in fstab:
