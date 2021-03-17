@@ -205,8 +205,6 @@ helper.banner("Install MegaCli, StorCli, tw_cli")
 
 
 
-
-
 raid=helper.ask("Should we install RAID-Tools ")
 
 
@@ -235,13 +233,23 @@ if nfs=="":
         print "no dir .. creating"
         os.makedirs ("/backup")
     fstab=open("/etc/fstab", "r")
-    #fstab_new=open("/etc/fstab_new", "w")
+
+
+    found = False
+    
+    fstab_line = "192.168.0.67:/backup /backup nfs rw 0 0"
     for line in fstab:
         print line
-        if not line =="192.168.0.67:/backup /backup nfs rw 0 0":
-            print  "NEIN"
-        
+        if  line.find(fstab_line) != -1 :
+            found=True
+            print "already present in fstab "
     fstab.close
-    #        fstab=open("/etc/fstab", "w")
-    #        fstab.append("192.168.0.67:/backup /backup nfs rw 0 0")
+    
+    if not found :
+        print 'not found'
+    
+        fstab=open('/etc/fstab', 'a')
+        fstab.write('192.168.0.67:/backup /backup nfs rw 0 0\r\n')
+        fstab.close()
+       
     
