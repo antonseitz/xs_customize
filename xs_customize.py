@@ -68,7 +68,7 @@ if ipmi=="":
 	
 
 	
-helper.banner("INSTALL Check_mk AGENT")
+helper.banner("get Check_mk AGENT running")
 
 check_mk=helper.ask("Should we config iptables for check_mk agent ?")
 if check_mk=="" :
@@ -227,3 +227,15 @@ if raid=="" :
 		print("Done: Installing " + tool +" \n")
 
 
+helper.banner("NFS Mount")
+
+nfs=helper.ask("Make NFS Mount ? ")
+if nfs=="":
+    if os.path.isdir("/backup") is False :
+         print "no dir .. creating"
+        os.makedirs ("/backup")
+    fstab=open("/etc/fstab", "w")
+    for line in fstab:
+        if not line =="192.168.0.67:/backup /backup nfs rw 0 0":
+            fstab.append("192.168.0.67:/backup /backup nfs rw 0 0")
+    
