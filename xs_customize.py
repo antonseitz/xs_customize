@@ -7,7 +7,7 @@ import subprocess , os, stat, socket, platform,sys
 #sys.path.insert(0, './py_helper/')
 
 sys.path.append("./py_helper")
-import helper
+import . helper
 root=os.getcwd()
 
 helper.banner("YUM or APT")
