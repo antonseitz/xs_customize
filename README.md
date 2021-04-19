@@ -14,7 +14,7 @@ cd xs_customize
 rm -f xs_customize.sh && wget --no-cache https://raw.githubusercontent.com/antonseitz/xs_customize/master/xs_customize.sh && chmod u+x xs_customize.sh
  
 
-# xs_customize.sh
+# xs_customize.py
 This script 
 - installs mc (Midnight COmmandar) on a XenServer Installation > 7.0
 - installs check_mk agent and 
