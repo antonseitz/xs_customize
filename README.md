@@ -4,7 +4,7 @@
 
 yum --enablerepo=base -y install git
 
-git clone https://github.com/antonseitz/xs_customize.git
+git clone --recursive  https://github.com/antonseitz/xs_customize.git
  
 cd xs_customize
 
