@@ -266,4 +266,41 @@ if nfs=="":
         fstab.write('192.168.0.67:/backup /backup nfs rw 0 0\r\n')
         fstab.close()
        
+       
+helper.banner("Restore ISO Store")
+
+iso=helper.ask("Restore local ISO store from former isntallation (sda2 backup) ? ")
+if iso=="":
+    if os.path.isdir("/var/opt/xen/ISO_Store") is False :
+        print "no dir .. creating"
+        os.makedirs ("/var/opt/xen/ISO_Store")
+   # fstab=open("/etc/fstab", "r")
+
+
+    found = False
+    
+    
+    
+    if not found :
+        print 'not found'
+    
+        
+    os.system("xe sr-create name-label=Local_ISO type=iso device-config:location=/var/opt/xen/ISO_Store device-config:legacy_mode=true content-type=iso")
+    
+    if os.path.isdir("/tmp/ISO_Store") is False :
+        print "no dir .. creating"
+        os.makedirs ("/tmp/ISO_Store")
+    os.system("mount /dev/sda2 /tmp/ISO_Store")
+    
+    
+    for path, dirs, files in os.walk('/tmp/ISO_Store/var/opt/xen/ISO_Store'):
+        for file in files:
+            print "copying "  + file + " ...\n"
+
+            shutil.copy( os.path.join (path , file) , "/var/opt/xen/ISO_Store/" ) 
+            
+    
+    os.system("umount /dev/sda2")
+    
+    
     
