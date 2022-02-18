@@ -1,9 +1,12 @@
 #!/bin/python
 # -*- coding: utf-8 -*-
+# gets version of xenserver components by 
+# "xe host-param-get"
 
 import datetime, subprocess,sys,time
 
 
+# get HOST UUID
 xensource=open('/etc/xensource-inventory')
 lines=xensource.readlines()
 
@@ -20,6 +23,8 @@ for line in lines:
 uuid=uuid.replace("'","")
 uuid=uuid.replace("\n","")
 
+
+# get software-version
 xe_version = subprocess.check_output(["xe", "host-param-get", "uuid=" + uuid ,  "param-name=software-version" ])
 
 
