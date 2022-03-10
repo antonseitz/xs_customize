@@ -12,17 +12,20 @@ import re
 
 
 lspci=check_output(["lspci" , "-k"])
-
+lsusb=check_output(["lsusb" , "-t"])
 # Alle Umbrüche ( 0xA0 = LF) als \n anzeigen lassen:
 lspci = repr(lspci)#
-
-# Alle \n in \\ umwandeln
+lsusb = repr(lsusb)#
+# Alle \n in \\n umwandeln
 # den \ von \n muss man im regex auch escapten: \\ = \ 
 lspci = re.sub(r'\\n', "\\\\n", lspci)
+lsusb = re.sub(r'\\n', "\\\\n", lsusb)
+lsusb = re.sub(r'/:', "", lsusb)
 # Tabs rauslöschen:
 lspci = re.sub(r'\\t', "", lspci)
 
 # die Ausgabe von repr (s.o.) hat immer single quotes. wir löschen sie:
 lspci = re.sub(r'\'', "", lspci)
+lsusb = re.sub(r'\'', "", lsusb)
 
-print  '0 Linux_Hardware - OK  Output of lspci: (Details in long output)\\n' + lspci
+print  '0 Linux_Hardware - OK  Output of lspci: (Details in long output)\\n' + lspci + "USB: \\n" + lsusb
