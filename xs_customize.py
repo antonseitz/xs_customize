@@ -1,14 +1,14 @@
 #!/bin/python
 
-import subprocess , os, stat, socket, platform,sys
-
+import subprocess , os, stat, socket, platform,sys, shutil
+from os.path import join, getsize
 
 #execfile( "./py_helper/helper.py")
 #sys.path.insert(0, './py_helper/')
 
 sys.path.append("./py_helper")
-import helper
-root=os.getcwd()
+from py_helper import helper
+scriptroot=os.path.dirname(os.path.abspath(__file__))
 
 helper.banner("YUM or APT")
 
@@ -194,9 +194,23 @@ if check_mk=="" :
 	
 plugins=helper.ask("Install my check_mk plugins ?")
 if plugins=="":
-	helper.banner(" INSTALL MY CHECK_MK PLUGINS ")
-	execfile( root  + "/check_mk_install_my_plugins.py")
-	
+    helper.banner(" INSTALL MY CHECK_MK PLUGINS ")
+    print scriptroot
+    for path, dirs, files in os.walk(scriptroot + '/check_plugins'):
+        for file in files:
+        # print "Install " + file + " ? "
+        # print "y / n "
+            install=raw_input("Install " + file + " ? [ ENTER / n ]")
+
+            if install == "" :
+                print "installing "  + file + " ...\n"
+                if os.path.isdir("/usr/lib/check_mk_agent/local/") is False :
+                    print "no dir .. creating"
+                    os.makedirs ("/usr/lib/check_mk_agent/local/")
+                shutil.copy( os.path.join (path , file) , "/usr/lib/check_mk_agent/local/" ) 
+                os.chmod ( os.path.join("/usr/lib/check_mk_agent/local/" , file ) , 0o700)
+            else:
+                print "skipping"
 
 
 helper.banner("Install MegaCli, StorCli, tw_cli")
@@ -211,7 +225,7 @@ raid=helper.ask("Should we install RAID-Tools ")
 if raid=="" :
 
 	hostname=socket.gethostname()
-	installs=root + "/raidtools/" + hostname
+	installs=scriptroot + "/raidtools/" + hostname
 	if not os.path.exists(installs):
 		print("Path " + installs + " not existing! \n Aborting!")
 		exit(1)
@@ -220,7 +234,7 @@ if raid=="" :
 	for tool in tools:
 		print("Installing " + tool +" ... \n")
 		
-		os.system( root + "/raidtools/" + tool.strip("\n") + "/installcmd "  + root + "/raidtools/" + tool )
+		os.system( scriptroot + "/raidtools/" + tool.strip("\n") + "/installcmd "  + scriptroot + "/raidtools/" + tool )
 		
 		print("Done: Installing " + tool +" \n")
 
@@ -252,4 +266,41 @@ if nfs=="":
         fstab.write('192.168.0.67:/backup /backup nfs rw 0 0\r\n')
         fstab.close()
        
+       
+helper.banner("Restore ISO Store")
+
+iso=helper.ask("Restore local ISO store from former isntallation (sda2 backup) ? ")
+if iso=="":
+    if os.path.isdir("/var/opt/xen/ISO_Store") is False :
+        print "no dir .. creating"
+        os.makedirs ("/var/opt/xen/ISO_Store")
+   # fstab=open("/etc/fstab", "r")
+
+
+    found = False
+    
+    
+    
+    if not found :
+        print 'not found'
+    
+        
+    os.system("xe sr-create name-label=Local_ISO type=iso device-config:location=/var/opt/xen/ISO_Store device-config:legacy_mode=true content-type=iso")
+    
+    if os.path.isdir("/tmp/ISO_Store") is False :
+        print "no dir .. creating"
+        os.makedirs ("/tmp/ISO_Store")
+    os.system("mount /dev/sda2 /tmp/ISO_Store")
+    
+    
+    for path, dirs, files in os.walk('/tmp/ISO_Store/var/opt/xen/ISO_Store'):
+        for file in files:
+            print "copying "  + file + " ...\n"
+
+            shutil.copy( os.path.join (path , file) , "/var/opt/xen/ISO_Store/" ) 
+            
+    
+    os.system("umount /dev/sda2")
+    
+    
     

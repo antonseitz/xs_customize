@@ -1,7 +1,7 @@
 #!/bin/python
 # -*- coding: utf-8 -*-
 
-import datetime, subprocess,sys,time
+import datetime, subprocess,sys,time,re
 
 
 xensource=open('/etc/xensource-inventory')
@@ -22,9 +22,18 @@ uuid=uuid.replace("\n","")
 
 xe_version = subprocess.check_output(["xe", "host-param-get", "uuid=" + uuid ,  "param-name=software-version" ])
 
+date = re.search("date: \d{4}-\d{2}-\d{2}",xe_version)
+product_version = re.search("product_version: \d\.\d\.\d",xe_version)
+platform_version = re.search("platform_version: \d\.\d\.\d",xe_version)
+xen_version = re.search("xen: [\d\.-]+",xe_version)
+linux_version = re.search("linux: [\d\.+]+",xe_version)
 
 
-print "0 XenServer_Version Version=" + xe_version
+xe_version_short = str(product_version.group()) + " " + str(date.group())  + " " + str(platform_version.group())  + " " + str(xen_version.group())+ " " + str(linux_version.group())
+
+xe_version_raw  = re.sub(r';', "\\\\n", xe_version )
+
+print "0 XenServer_Version - OK " + xe_version_short + "\\n" +  xe_version 
 sys.exit(0)
 
 
