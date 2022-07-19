@@ -1,0 +1,47 @@
+#!/bin/python
+# -*- coding: utf-8 -*-
+
+import datetime, subprocess,sys,time,re
+
+
+
+
+ups_long = subprocess.check_output(["upsc", "zinto" ])
+
+ups_long = repr(ups_long)
+
+
+device1=re.search("device.mfr: (.*?)\\\\n",ups_long)
+device2=re.search("device.model: (.*?)\\\\n",ups_long)
+device3=re.search("ups.status: (.*?)\\\\n",ups_long)
+device4=re.search("battery.charge: (\d*?)\\\\n",ups_long)
+device5=re.search("battery.runtime: (\d*?)\\\\n",ups_long)
+device6=re.search("ups.load: (\d*?)\\\\n",ups_long)
+
+
+
+
+device1=str(device1.group(1))
+device2=str(device2.group(1))
+device3=str(device3.group(1))
+device4=str(device4.group(1))
+device5=str(device5.group(1))
+device6=str(device6.group(1))
+
+ups_short = device1 + " " + device2 + " Status: " + device3
+
+metrics= "BatCharge=" + device4 + "%;70;90;0;100|BatRuntime=" + device5 + "s|UpsLoad=" + device6 + "%;80;90;0;100"
+
+
+
+
+
+
+ups_long=ups_long.replace("\'","")
+
+
+
+print "0 UPS_STATUS "+ metrics  + " OK " + ups_short + "\\n" +  ups_long 
+sys.exit(0)
+
+
